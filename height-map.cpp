@@ -1,4 +1,6 @@
 // main function gangsters 
+// The goal of this program is to take height values based on pixle value (0-255) and correlate them to a map. 
+// image -> data file
 
 // Calling the boys 
 #include <iostream>
