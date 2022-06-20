@@ -1,51 +1,60 @@
-// main function gangsters 
-// The goal of this program is to take height values based on pixle value (0-255) and correlate them to a map. 
-// image -> data file
+// SurfaceDistancer.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
 
-// Calling the boys 
 #include <iostream>
-#include <fstream> 
-#include <windows.h>
-#include <string> 
+#include <fstream>
+#include <vector>
 
 void readDataFile(std::string fileIn, char** data);
-float computeDistance(char * data, int indexAlpha, indexBravo);
+float computeDistance(char* data, int indexA, int indexB);
+
+int getSize(char* s) {
+    char* t;
+    for (t = s; *t != '\0'; t++)
+        ;
+    return t - s;
+}
 
 int main()
 {
-    std::string preFile = "/workspace/mt-helens-map/pre.data";
-    std::string postFile = "/workspace/mt-helens-map/post.data";
+    std::string preFile = "Resources\\st-helens\\pre.data";
+    std::string postFile = "Resources\\st-helens\\post.data";
 
     char* preBuffer = NULL;
-    char* postBuffer = NULL;
+    char* postBuffer= NULL;
 
     readDataFile(preFile, &preBuffer);
     readDataFile(preFile, &postBuffer);
 
-    delete[] preBuffer;
-    delete[] postBuffer; 
+    int t = getSize(preBuffer);
+    for (int i = 0; i < t; i++)
+        std::cout << static_cast<unsigned int>(preBuffer[i]) << " ";
 
+
+    delete[] preBuffer;
+    delete[] postBuffer;
+    
     return 0;
 }
 
 void readDataFile(std::string fileIn, char** data)
 {
     std::ifstream ifs(fileIn, std::ifstream::binary);
-    if(ifs)
+    if (ifs)
     {
         ifs.seekg(0, ifs.end);
-        int leng = ifs.tellg();
+        int length = ifs.tellg();
         ifs.seekg(0, ifs.beg);
 
-        *data = new char[leng];
-        std::cout << "Reading " << leng << " characters...\n";
-        ifs.read(*data, leng);
-        
-        if(ifs)
-            std::cout << "all chars read successfully. \n";
+        *data = new char[length];
+        std::cout << "Reading " << length << " characters...\n";
+        ifs.read(*data, length);
+
+        if (ifs)
+            std::cout << "all characters read sucessfully.\n";
         else
-            std::cout << "error: only" << ifs.gcount() << " could be read";
-        
-        ifs.close(); 
+            std::cout << "error: only " << ifs.gcount() << " could be read";
+
+        ifs.close();
     }
 }
